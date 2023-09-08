@@ -33,16 +33,16 @@ public class LabEditorTexto extends JFrame implements ActionListener{
         this.setSize(500, 600);
         this.setLayout(new FlowLayout());
         this.setLocationRelativeTo(null);
-
+ 
         textArea = new JTextArea();
         textArea.setLineWrap(true);
         textArea.setWrapStyleWord(true);
         textArea.setFont(new Font("Arial",Font.PLAIN,20));
-
+        
         scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(450,450));
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-  
+
         fontLabel = new JLabel("Font: ");
 
         fontSizeSpinner = new JSpinner();
@@ -66,7 +66,7 @@ public class LabEditorTexto extends JFrame implements ActionListener{
         fontBox = new JComboBox(fonts);
         fontBox.addActionListener(this);
         fontBox.setSelectedItem("Arial");
-
+        
         // ----- menubar -----
 
         menuBar = new JMenuBar();
