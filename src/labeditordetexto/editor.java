@@ -9,7 +9,9 @@ import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -30,6 +32,7 @@ import javax.swing.text.Element;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import javax.swing.text.rtf.RTFEditorKit;
 
 /**
  *
@@ -486,61 +489,64 @@ public class editor extends javax.swing.JFrame {
 
     private void abrirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirArchivoMouseClicked
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("."));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
-        fileChooser.setFileFilter(filter);
+    fileChooser.setCurrentDirectory(new File("."));
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT files", "txt");
+    fileChooser.setFileFilter(filter);
 
-        int response = fileChooser.showOpenDialog(null);
+    int response = fileChooser.showOpenDialog(null);
 
-        if (response == JFileChooser.APPROVE_OPTION) {
-            File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+    if (response == JFileChooser.APPROVE_OPTION) {
+        File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
 
-            try (Scanner fileIn = new Scanner(file)) {
-                if (file.isFile()) {
-                    StyledDocument doc = vis.getStyledDocument();
-                    while (fileIn.hasNextLine()) {
-                        String line = fileIn.nextLine() + "\n";
-                        doc.insertString(doc.getLength(), line, null);
-                    }
-                }
-            } catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            } catch (IOException | BadLocationException e2) {
-                e2.printStackTrace();
-            }
+        try {
+            // Create a FileInputStream for the file
+            FileInputStream fis = new FileInputStream(file);
+
+            // Get the StyledDocument from the JTextPane
+            StyledDocument doc = vis.getStyledDocument();
+
+            // Create an RTFEditorKit and use it to read the file into the StyledDocument
+            RTFEditorKit kit = new RTFEditorKit();
+            kit.read(fis, doc, 0);
+        } catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } catch (IOException | BadLocationException e2) {
+            e2.printStackTrace();
         }
+    }
+
     }//GEN-LAST:event_abrirArchivoMouseClicked
 
     private void crearArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearArchivoMouseClicked
-        if(vis.getText().isBlank() || vis.getText().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "NO HA INGRESADO TEXTO");
-        }else{
+        JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setCurrentDirectory(new File("."));
 
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File("."));
+    int response = fileChooser.showSaveDialog(null);
 
-            int response = fileChooser.showSaveDialog(null);
+    if(response == JFileChooser.APPROVE_OPTION) {
+        File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+        try {
+            // Get the StyledDocument from the JTextPane
+            StyledDocument doc = vis.getStyledDocument();
 
-            if(response == JFileChooser.APPROVE_OPTION) {
-                File file;
-                PrintWriter fileOut = null;
+            // Create a FileOutputStream for the file
+            FileOutputStream fos = new FileOutputStream(file);
 
-                file = new File(fileChooser.getSelectedFile().getAbsolutePath());
-                try {
-                    fileOut = new PrintWriter(file);
-                    fileOut.println(vis.getText());
-                    vis.setText("");
-                    JOptionPane.showMessageDialog(null, "GUARDADO");
+            // Write the StyledDocument to the FileOutputStream
+            RTFEditorKit kit = new RTFEditorKit();
+            kit.write(fos, doc, 0, doc.getLength());
 
-                } 
-                catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
-                }
-                finally {
-                    fileOut.close();
-                }   
-            }
+            // Clear the JTextPane
+            vis.setText("");
+        } 
+        catch (FileNotFoundException e1) {
+            e1.printStackTrace();
+        } 
+        catch (IOException | BadLocationException e2) {
+            e2.printStackTrace();
         }
+    }
+
     }//GEN-LAST:event_crearArchivoMouseClicked
 
 
