@@ -488,52 +488,58 @@ public class editor extends javax.swing.JFrame {
     }//GEN-LAST:event_byeItaMouseClicked
 
     private void abrirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirArchivoMouseClicked
-    JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setCurrentDirectory(new File("."));
-    FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT files", "txt");
-    fileChooser.setFileFilter(filter);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("."));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT files", "txt");
+        fileChooser.setFileFilter(filter);
 
-    int response = fileChooser.showOpenDialog(null);
+        int response = fileChooser.showOpenDialog(null);
 
-    if (response == JFileChooser.APPROVE_OPTION) {
-        File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+        if (response == JFileChooser.APPROVE_OPTION) {
+            File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
 
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            StyledDocument doc = vis.getStyledDocument();
-            RTFEditorKit kit = new RTFEditorKit();
-            kit.read(fis, doc, 0);
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (IOException | BadLocationException e2) {
-            e2.printStackTrace();
+            try {
+                FileInputStream fis = new FileInputStream(file);
+                vis.setText("");
+                StyledDocument doc = vis.getStyledDocument();
+                RTFEditorKit kit = new RTFEditorKit();
+                kit.read(fis, doc, 0);
+
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException | BadLocationException e2) {
+                e2.printStackTrace();
+            }
         }
-    }
-
     }//GEN-LAST:event_abrirArchivoMouseClicked
 
     private void crearArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearArchivoMouseClicked
-        JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setCurrentDirectory(new File("."));
+       if(vis.getText().isEmpty() || vis.getText().isBlank()){
+           JOptionPane.showMessageDialog(null, "NO HA INGRESADO TEXTO");
+       }else{
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setCurrentDirectory(new File("."));
 
-    int response = fileChooser.showSaveDialog(null);
+            int response = fileChooser.showSaveDialog(null);
 
-    if(response == JFileChooser.APPROVE_OPTION) {
-        File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".txt");
-        try {
-            StyledDocument doc = vis.getStyledDocument();
-            FileOutputStream fos = new FileOutputStream(file);
-            RTFEditorKit kit = new RTFEditorKit();
-            kit.write(fos, doc, 0, doc.getLength());
-            vis.setText("");
-        } 
-        catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } 
-        catch (IOException | BadLocationException e2) {
-            e2.printStackTrace();
-        }
-    }
+            if(response == JFileChooser.APPROVE_OPTION) {
+                File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".txt");
+                try {
+                    StyledDocument doc = vis.getStyledDocument();
+                    FileOutputStream fos = new FileOutputStream(file);
+                    RTFEditorKit kit = new RTFEditorKit();
+                    kit.write(fos, doc, 0, doc.getLength());
+                    vis.setText("");
+                    JOptionPane.showMessageDialog(null, "ARCHIVO GUARDADO");
+                } 
+                catch (FileNotFoundException e1) {
+                    e1.printStackTrace();
+                } 
+                catch (IOException | BadLocationException e2) {
+                    e2.printStackTrace();
+                }
+            }
+       }
 
     }//GEN-LAST:event_crearArchivoMouseClicked
 
