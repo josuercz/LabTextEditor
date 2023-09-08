@@ -7,8 +7,10 @@ package labeditordetexto;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -21,7 +23,9 @@ import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Element;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -512,24 +516,57 @@ public class editor extends javax.swing.JFrame {
 
         int r = fc.showSaveDialog(null);
 
-        if(r == JFileChooser.APPROVE_OPTION) {
-            File file;
-            PrintWriter fileOut = null;
+        if (r == JFileChooser.APPROVE_OPTION) {
+            File file = fc.getSelectedFile();
 
-            file = new File(fc.getSelectedFile().getAbsolutePath());
-            try {
-                fileOut = new PrintWriter(file);
-                fileOut.println(vis.getText());
-            } 
-            catch (FileNotFoundException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                // Obtiene el StyledDocument
+                StyledDocument doc = vis.getStyledDocument();
+                int length = doc.getLength();
+
+                // Itera a través del documento y guarda el texto con formato HTML
+                for (int i = 0; i < length; i++) {
+                    Element element = doc.getCharacterElement(i);
+                    AttributeSet attrs = element.getAttributes();
+                    String text = doc.getText(i, 1);
+                    String style = AttributeSetToString(attrs);
+                    writer.write("<span style=\"" + style + "\">" + text + "</span>");
+                }
+            } catch (IOException | BadLocationException e) {
+                e.printStackTrace();
             }
-            finally {
-                fileOut.close();
-            }   
         }
     }//GEN-LAST:event_crearArchivoMouseClicked
+    private String AttributeSetToString(AttributeSet attrs) {
+        String style = "";
+
+        if (StyleConstants.isBold(attrs)) {
+            style += "font-weight: bold;";
+        }
+        if (StyleConstants.isItalic(attrs)) {
+            style += "font-style: italic;";
+        }
+        if (StyleConstants.isUnderline(attrs)) {
+            style += "text-decoration: underline;";
+        }
+
+        // Obtener tamaño de fuente
+        int size = StyleConstants.getFontSize(attrs);
+        style += "font-size: " + size + "pt;";
+
+        // Obtener tipo de fuente
+        String fontFamily = StyleConstants.getFontFamily(attrs);
+        style += "font-family: " + fontFamily + ";";
+
+        // Obtener color de fondo
+        Color bgColor = StyleConstants.getBackground(attrs);
+        if (bgColor != null) {
+            String hexColor = String.format("#%02x%02x%02x", bgColor.getRed(), bgColor.getGreen(), bgColor.getBlue());
+            style += "background-color: " + hexColor + ";";
+        }
+
+        return style;
+    }
 
     /**
      * @param args the command line arguments
@@ -595,4 +632,6 @@ public class editor extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> tamaño;
     private javax.swing.JTextPane vis;
     // End of variables declaration//GEN-END:variables
+
+    
 }
