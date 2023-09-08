@@ -40,28 +40,26 @@ import javax.swing.text.rtf.RTFEditorKit;
  */
 public class editor extends javax.swing.JFrame {
 
-
     public editor() {
         initComponents();
-        doc= vis.getStyledDocument();
-        estilo=vis.addStyle("n", null);
+        doc = vis.getStyledDocument();
+        estilo = vis.addStyle("n", null);
         f();
-        
+
     }
-    private void f(){
-        DefaultComboBoxModel mod=(DefaultComboBoxModel) fuente.getModel();
-        GraphicsEnvironment e= GraphicsEnvironment.getLocalGraphicsEnvironment();
-        String listaF[]= e.getAvailableFontFamilyNames();
+
+    private void f() {
+        DefaultComboBoxModel mod = (DefaultComboBoxModel) fuente.getModel();
+        GraphicsEnvironment e = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        String listaF[] = e.getAvailableFontFamilyNames();
         String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        for(int i=0; i< fonts.length;i++){
+        for (int i = 0; i < fonts.length; i++) {
             mod.addElement(fonts[i]);
         }
         fuente.setModel(mod);
     }
     StyledDocument doc;
     Style estilo;
-    
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -378,63 +376,63 @@ public class editor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void colorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_colorMouseClicked
-       try{
-           StyleConstants.setForeground(estilo, JColorChooser.showDialog(this, "Elija color", Color.yellow));
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setForeground(estilo, JColorChooser.showDialog(this, "Elija color", Color.yellow));
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
     }//GEN-LAST:event_colorMouseClicked
 
     private void subMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subMouseClicked
-        try{
-           StyleConstants.setUnderline(estilo,true);
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setUnderline(estilo, true);
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
 
     }//GEN-LAST:event_subMouseClicked
 
     private void quitar_subMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitar_subMouseClicked
-        try{
-           StyleConstants.setUnderline(estilo,false);
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setUnderline(estilo, false);
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
     }//GEN-LAST:event_quitar_subMouseClicked
 
     private void tamañoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tamañoActionPerformed
         StyleConstants.setFontSize(estilo, Integer.parseInt(tamaño.getSelectedItem().toString()));
-        doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
+        doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
     }//GEN-LAST:event_tamañoActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        try{
-           StyleConstants.setBackground(estilo, Color.YELLOW);
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setBackground(estilo, Color.YELLOW);
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void quitFondoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitFondoMouseClicked
-        try{
-           StyleConstants.setBackground(estilo, Color.white);
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setBackground(estilo, Color.white);
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
     }//GEN-LAST:event_quitFondoMouseClicked
 
     private void fuenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fuenteMouseClicked
-      
+
     }//GEN-LAST:event_fuenteMouseClicked
 
     private void fuenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fuenteActionPerformed
@@ -443,64 +441,65 @@ public class editor extends javax.swing.JFrame {
 
     private void fuenteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_fuenteItemStateChanged
         StyleConstants.setFontFamily(estilo, fuente.getSelectedItem().toString());
-       doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-    
+        doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+
     }//GEN-LAST:event_fuenteItemStateChanged
 
     private void boldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_boldMouseClicked
-        try{
-           StyleConstants.setBold(estilo, true);
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setBold(estilo, true);
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
     }//GEN-LAST:event_boldMouseClicked
 
     private void byeBoldMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_byeBoldMouseClicked
-        try{
-           StyleConstants.setBold(estilo, false);
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setBold(estilo, false);
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
     }//GEN-LAST:event_byeBoldMouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        try{
-           StyleConstants.setItalic(estilo, true);
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setItalic(estilo, true);
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void byeItaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_byeItaMouseClicked
-        try{
-           StyleConstants.setItalic(estilo, false);
-       
-           doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd()-vis.getSelectionStart(), vis.getStyle("n"), true);
-       }catch(Exception ex){
-           System.out.println("ups"); 
-       }
+        try {
+            StyleConstants.setItalic(estilo, false);
+
+            doc.setCharacterAttributes(vis.getSelectionStart(), vis.getSelectionEnd() - vis.getSelectionStart(), vis.getStyle("n"), true);
+        } catch (Exception ex) {
+            System.out.println("ups");
+        }
     }//GEN-LAST:event_byeItaMouseClicked
 
     private void abrirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirArchivoMouseClicked
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File("."));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT files", "txt");
-        fileChooser.setFileFilter(filter);
+        JFileChooser fac = new JFileChooser();
+        fac.setCurrentDirectory(new File("."));
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("TXT files", "txt");
+        fac.setFileFilter(fnef);
 
-        int response = fileChooser.showOpenDialog(null);
+        int AA = fac.showOpenDialog(null);
 
-        if (response == JFileChooser.APPROVE_OPTION) {
-            File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+        if (AA == JFileChooser.APPROVE_OPTION) {
+            File file = new File(fac.getSelectedFile().getAbsolutePath());
 
             try {
                 FileInputStream fis = new FileInputStream(file);
                 vis.setText("");
+                JOptionPane.showMessageDialog(null, "SE HA ABIERTO EL ARCHIVO");
                 StyledDocument doc = vis.getStyledDocument();
                 RTFEditorKit kit = new RTFEditorKit();
                 kit.read(fis, doc, 0);
@@ -514,16 +513,16 @@ public class editor extends javax.swing.JFrame {
     }//GEN-LAST:event_abrirArchivoMouseClicked
 
     private void crearArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearArchivoMouseClicked
-       if(vis.getText().isEmpty() || vis.getText().isBlank()){
-           JOptionPane.showMessageDialog(null, "NO HA INGRESADO TEXTO");
-       }else{
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File("."));
+        if (vis.getText().isEmpty() || vis.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "NO HA INGRESADO TEXTO");
+        } else {
+            JFileChooser fac = new JFileChooser();
+            fac.setCurrentDirectory(new File("."));
 
-            int response = fileChooser.showSaveDialog(null);
+            int AA = fac.showSaveDialog(null);
 
-            if(response == JFileChooser.APPROVE_OPTION) {
-                File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".txt");
+            if (AA == JFileChooser.APPROVE_OPTION) {
+                File file = new File(fac.getSelectedFile().getAbsolutePath() + ".txt");
                 try {
                     StyledDocument doc = vis.getStyledDocument();
                     FileOutputStream fos = new FileOutputStream(file);
@@ -531,23 +530,19 @@ public class editor extends javax.swing.JFrame {
                     kit.write(fos, doc, 0, doc.getLength());
                     vis.setText("");
                     JOptionPane.showMessageDialog(null, "ARCHIVO GUARDADO");
-                } 
-                catch (FileNotFoundException e1) {
+                } catch (FileNotFoundException e1) {
                     e1.printStackTrace();
-                } 
-                catch (IOException | BadLocationException e2) {
+                } catch (IOException | BadLocationException e2) {
                     e2.printStackTrace();
                 }
             }
-       }
+        }
 
     }//GEN-LAST:event_crearArchivoMouseClicked
-
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton abrirArchivo;
@@ -579,5 +574,4 @@ public class editor extends javax.swing.JFrame {
     private javax.swing.JTextPane vis;
     // End of variables declaration//GEN-END:variables
 
-    
 }
