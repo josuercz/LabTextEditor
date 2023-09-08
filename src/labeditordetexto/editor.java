@@ -488,7 +488,7 @@ public class editor extends javax.swing.JFrame {
     }//GEN-LAST:event_byeItaMouseClicked
 
     private void abrirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirArchivoMouseClicked
-        JFileChooser fileChooser = new JFileChooser();
+    JFileChooser fileChooser = new JFileChooser();
     fileChooser.setCurrentDirectory(new File("."));
     FileNameExtensionFilter filter = new FileNameExtensionFilter("TXT files", "txt");
     fileChooser.setFileFilter(filter);
@@ -499,13 +499,8 @@ public class editor extends javax.swing.JFrame {
         File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
 
         try {
-            // Create a FileInputStream for the file
             FileInputStream fis = new FileInputStream(file);
-
-            // Get the StyledDocument from the JTextPane
             StyledDocument doc = vis.getStyledDocument();
-
-            // Create an RTFEditorKit and use it to read the file into the StyledDocument
             RTFEditorKit kit = new RTFEditorKit();
             kit.read(fis, doc, 0);
         } catch (FileNotFoundException e1) {
@@ -526,17 +521,10 @@ public class editor extends javax.swing.JFrame {
     if(response == JFileChooser.APPROVE_OPTION) {
         File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
         try {
-            // Get the StyledDocument from the JTextPane
             StyledDocument doc = vis.getStyledDocument();
-
-            // Create a FileOutputStream for the file
             FileOutputStream fos = new FileOutputStream(file);
-
-            // Write the StyledDocument to the FileOutputStream
             RTFEditorKit kit = new RTFEditorKit();
             kit.write(fos, doc, 0, doc.getLength());
-
-            // Clear the JTextPane
             vis.setText("");
         } 
         catch (FileNotFoundException e1) {
