@@ -519,7 +519,7 @@ public class editor extends javax.swing.JFrame {
     int response = fileChooser.showSaveDialog(null);
 
     if(response == JFileChooser.APPROVE_OPTION) {
-        File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+        File file = new File(fileChooser.getSelectedFile().getAbsolutePath() + ".txt");
         try {
             StyledDocument doc = vis.getStyledDocument();
             FileOutputStream fos = new FileOutputStream(file);
