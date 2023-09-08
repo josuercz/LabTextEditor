@@ -7,11 +7,21 @@ package labeditordetexto;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
@@ -207,9 +217,19 @@ public class editor extends javax.swing.JFrame {
             }
         });
 
-        crearArchivo.setText("Crear Archivo");
+        crearArchivo.setText("Guardar");
+        crearArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                crearArchivoMouseClicked(evt);
+            }
+        });
 
         abrirArchivo.setText("Abrir archivo");
+        abrirArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                abrirArchivoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -269,9 +289,9 @@ public class editor extends javax.swing.JFrame {
                 .addContainerGap(61, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(abrirArchivo)
-                    .addComponent(crearArchivo))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(abrirArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(crearArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(39, 39, 39))
         );
         jPanel1Layout.setVerticalGroup(
@@ -458,6 +478,58 @@ public class editor extends javax.swing.JFrame {
            System.out.println("ups"); 
        }
     }//GEN-LAST:event_byeItaMouseClicked
+
+    private void abrirArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirArchivoMouseClicked
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("."));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text files", "txt");
+        fileChooser.setFileFilter(filter);
+
+        int response = fileChooser.showOpenDialog(null);
+
+        if (response == JFileChooser.APPROVE_OPTION) {
+            File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+
+            try (Scanner fileIn = new Scanner(file)) {
+                if (file.isFile()) {
+                    StyledDocument doc = vis.getStyledDocument();
+                    while (fileIn.hasNextLine()) {
+                        String line = fileIn.nextLine() + "\n";
+                        doc.insertString(doc.getLength(), line, null);
+                    }
+                }
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException | BadLocationException e2) {
+                e2.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_abrirArchivoMouseClicked
+
+    private void crearArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_crearArchivoMouseClicked
+        JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File("."));
+
+        int r = fc.showSaveDialog(null);
+
+        if(r == JFileChooser.APPROVE_OPTION) {
+            File file;
+            PrintWriter fileOut = null;
+
+            file = new File(fc.getSelectedFile().getAbsolutePath());
+            try {
+                fileOut = new PrintWriter(file);
+                fileOut.println(vis.getText());
+            } 
+            catch (FileNotFoundException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+            finally {
+                fileOut.close();
+            }   
+        }
+    }//GEN-LAST:event_crearArchivoMouseClicked
 
     /**
      * @param args the command line arguments

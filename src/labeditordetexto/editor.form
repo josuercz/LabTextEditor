@@ -120,9 +120,9 @@
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="abrirArchivo" min="-2" max="-2" attributes="0"/>
-                      <Component id="crearArchivo" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="abrirArchivo" max="32767" attributes="0"/>
+                      <Component id="crearArchivo" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               </Group>
@@ -440,13 +440,19 @@
         </Component>
         <Component class="javax.swing.JButton" name="crearArchivo">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Crear Archivo"/>
+            <Property name="text" type="java.lang.String" value="Guardar"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="crearArchivoMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="abrirArchivo">
           <Properties>
             <Property name="text" type="java.lang.String" value="Abrir archivo"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="abrirArchivoMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
