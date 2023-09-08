@@ -10,6 +10,7 @@ package labeditordetexto;
  */
 public class Main {
     public static void main(String[] args) {
-        new LabEditorTexto();
+        editor Editor = new editor();
+        Editor.setVisible(true);
     }
 }
